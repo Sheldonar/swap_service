@@ -1,6 +1,11 @@
 #!/bin/bash
 
-trap 'createFile $NEW_SWAPFILE $DOUBLE_MEM' SIGUSR1
+trap recieveSignal SIGUSR1
+
+function recieveSignal {
+	echo 'SIGUSR1 signal was recieved!'
+	createFile $NEW_SWAPFILE $DOUBLE_MEM 
+}
 
 function createFile {
         echo 'Creating swap file...'
@@ -29,7 +34,7 @@ function expandSpace {
         #if file is more than half full
 	if [ $USED -gt $HALF_MEM ]
         then
-            	echo 'Swap file is more than half full. Creating another file..$'
+            	echo 'Swap file is more than half full. Creating another file...'
                 creatFile $NEW_SWAPFILE $DOUBLE_MEM
         fi
 }
@@ -38,7 +43,7 @@ function expandSpace {
 while true
 do
   	#check if swapfile exist
-	grep -q "swap" /etc/fstab
+	grep -q "swapfile" /etc/fstab
 
         #if not then create
         if [ $? -ne 0 ]

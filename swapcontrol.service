@@ -4,7 +4,7 @@ Documentation=man:swapcontrol(8)
 
 [Service]
 Type=simple
-ExecStart=/home/Documents/lab/swap_service
+ExecStart=/usr/sbin/swapcontrol.sh
 
 [Install]
 WantedBy=multi-user.target

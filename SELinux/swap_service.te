@@ -1,0 +1,51 @@
+policy_module(swap_service, 1.0.0)
+
+########################################
+#
+# Declarations
+#
+require {
+        type bin_t;
+        type etc_t;
+	type fsadm_exec_t;
+	type passwd_file_t;
+	type proc_t; 
+}
+type swap_service_t;
+type swap_service_exec_t;
+init_daemon_domain(swap_service_t, swap_service_exec_t)
+
+#
+type swap_service_log_t;
+logging_log_file(swap_service_log_t)
+
+# Be able to go to and search through /var/log
+logging_search_logs(swap_service_t)
+# Make sure that, if test_t writes a log file, it gets the proper context
+logging_log_filetrans(swap_service_t, swap_service_log_t, file)
+# Be able to create and append to its own log files
+allow swap_service_t swap_service_log_t:file { append_file_perms create_file_perms };
+
+permissive swap_service_t;
+
+########################################
+#
+# swap_service local policy
+#
+allow swap_service_t self:fifo_file rw_fifo_file_perms;
+allow swap_service_t self:unix_stream_socket create_stream_socket_perms;
+
+#from audit2allow
+allow swap_service_t bin_t:file execute;
+
+allow swap_service_t etc_t:file append;
+allow swap_service_t fsadm_exec_t:file { execute getattr read };
+allow swap_service_t passwd_file_t:file { getattr open read };
+allow swap_service_t proc_t:file { getattr open read };
+
+
+domain_use_interactive_fds(swap_service_t)
+
+files_read_etc_files(swap_service_t)
+
+miscfiles_read_localization(swap_service_t)

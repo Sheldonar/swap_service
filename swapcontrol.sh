@@ -29,10 +29,11 @@ function expandSpace {
         #if file is more than half full
 	if [ $USED -gt $HALF_MEM ]
         then
-            	echo 'Swap file is more than half full. Creating another file..$
+            	echo 'Swap file is more than half full. Creating another file..$'
                 creatFile $NEW_SWAPFILE $DOUBLE_MEM
         fi
 }
+
 
 while true
 do

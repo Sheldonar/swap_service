@@ -1,0 +1,31 @@
+.\" swapspace manpage
+.TH SWAPCONTROL 8 "May 2020" "swapcontrol 1.0" "Linux System Administration"
+.SH NAME
+swapcontrol \- dynamically manage swap space
+.SH SYNOPSIS
+.B swapcontrol.service
+.SH DESCRIPTION
+.PP
+Monitor swap usage and allocate swap space as needed.
+.PP
+If there is no swap file
+.B swapcontrol
+will create new, its size will be 512 MB
+.PP
+If the swap space is more than half full
+.B swapcontrol
+wil create swap file, that will be twice as large as the existing one.
+.SH SIGNALS
+Sending the \fBSIGUSR1\fR signal will make the program create new swap file whether the swap space is more than half full or not.
+.SH FILES
+\& /usr/bin/swapcontrol
+.SH AUTHOR
+Written by Svetlana Golub, Maxim Andryushin, Fedor Gerasimov, Maxim Rudik, Arseny Grubach, 
+Vitaly Zorichev
+.SH SEE ALSO
+.BR kill (1),
+.BR mkswap (8),
+.BR swapon (2),
+.BR swapoff (2),
+.BR swapon (8),
+.BR swapoff (8)

@@ -1,0 +1,10 @@
+[Unit]
+Description=SwapControl
+Documentation=man:swapcontrol(8)
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/swapcontrol.sh
+
+[Install]
+WantedBy=multi-user.target
